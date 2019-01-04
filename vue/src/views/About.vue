@@ -59,7 +59,7 @@ export default {
       let self = this;
       fetch.post('/testpost', {
         type: 'post'
-      },{showLoading:false})
+      },{showLoading:true})
       .then(response=>{
         self.postResponse = response
         console.log(response);
@@ -67,7 +67,7 @@ export default {
       .catch(error=>{
         console.log(error);
       });
-       setTimeout(()=>{
+      setTimeout(()=>{
         fetch.post('/testpost2', {
           ID: 12345,
           name:'马越',

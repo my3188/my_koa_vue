@@ -1,4 +1,5 @@
 import axios from "axios";
+import _ from "lodash";
 import {
   Loading,
   Message
@@ -59,9 +60,12 @@ function tryHideLoading(isShow=true) {
   if (isShow) {
     if (needLoadingRequestCount <= 0) return
     needLoadingRequestCount--
-    if (needLoadingRequestCount === 0) {
-      loadinginstace.close()
-    }
+    _.debounce(()=>{
+      if (needLoadingRequestCount === 0) {
+        loadinginstace.close()
+      }
+    }, 300)()
+    
   }
   
 }

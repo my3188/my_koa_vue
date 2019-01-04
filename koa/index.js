@@ -38,7 +38,7 @@ const testpost2 = async ctx => {
 		'ctx.request.body': ctx.request.body
 	};*/
 
-	  await delay(5000);
+	  await delay(2000);
 	  ctx.response.body = {
 		'ctx.request.body': ctx.request.body
 	};
@@ -49,7 +49,7 @@ const testpost = async ctx => {
 		'ctx.request.body': ctx.request.body
 	};*/
 
-	  await delay(2000);
+	  // await delay(2000);
 	  ctx.response.body = {
 		'ctx.request.body': ctx.request.body
 	};
