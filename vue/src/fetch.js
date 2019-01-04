@@ -41,14 +41,31 @@ let paramPost = function(data) {
 
 /****** request拦截器==>对请求参数做处理 ******/
 var loadinginstace;
+let needLoadingRequestCount = 0
+function showLoading() {
+  if (needLoadingRequestCount === 0) {
+    loadinginstace = Loading.service({
+      lock: true,
+      text: '加载中……',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
+  }
+  needLoadingRequestCount++
+}
+function tryHideLoading() {
+  if (needLoadingRequestCount <= 0) return
+  needLoadingRequestCount--
+  if (needLoadingRequestCount === 0) {
+    loadinginstace.close()
+  }
+}
+
+
 instance.interceptors.request.use(config => {
-  // element ui Loading方法
-  loadinginstace = Loading.service({
-    fullscreen: true
-  })
+  showLoading()
   return config
 }, error => {
-  loadinginstace.close()
+  tryHideLoading()
   Message.error({
     message: '加载超时'
   })
@@ -57,8 +74,8 @@ instance.interceptors.request.use(config => {
 
 
 instance.interceptors.response.use(res => {
-  console.log('====响应res===', res)
-  loadinginstace.close()
+  // console.log('====响应res===', res)
+  tryHideLoading()
   if (res.status == 200) {
     return res.data;
   }
@@ -81,34 +98,37 @@ instance.interceptors.response.use(res => {
     return Promise.reject(new Error("request.data is not Object"));
   }
 }, error => {
-  loadinginstace.close()
+  tryHideLoading()
   Message.error({
     message: '加载失败'
   })
   return Promise.reject(error)
 });
 // instance
-let myinstance = {
-
-}
-myinstance.get = function(url, data) {
-  return instance.get(url, {
+// let myinstance = instance;
+let _get = instance.get
+let _delete = instance.delete
+// myinstance.get = function(){};
+instance.get = function(url, data) {
+  return _get(url, {
     params: data
   });
 }
 
-myinstance.put = function(url, data) {
+/*myinstance.put = function(url, data) {
   return instance.put(url, data);
 }
 
 myinstance.post = function(url, data) {
   return instance.post(url, data);
-}
+}*/
 
-myinstance.delete = function(url, data) {
-  return instance.delete(url, {
+instance.delete = function(url, data) {
+  return _delete(url, {
     data
   });
 }
-export default myinstance;
+
+
+export default instance;
 // export default instance;

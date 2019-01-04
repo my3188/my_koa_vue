@@ -52,6 +52,8 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+
+     
     },
     onclickpost(){
       let self = this;
@@ -65,6 +67,12 @@ export default {
       .catch(error=>{
         console.log(error);
       });
+       setTimeout(()=>{
+        fetch.post('/testpost2', {
+          ID: 12345,
+          name:'马越',
+        })
+      },500)
     },    
     onclickput(){
       let self = this;
