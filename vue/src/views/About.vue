@@ -59,7 +59,7 @@ export default {
       let self = this;
       fetch.post('/testpost', {
         type: 'post'
-      })
+      },{showLoading:false})
       .then(response=>{
         self.postResponse = response
         console.log(response);
@@ -72,7 +72,7 @@ export default {
           ID: 12345,
           name:'马越',
         })
-      },500)
+      },1000)
     },    
     onclickput(){
       let self = this;

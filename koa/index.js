@@ -32,6 +32,17 @@ const testget = ctx => {
 };
 
 
+const testpost2 = async ctx => {
+	/*console.log('ctx.request.body', ctx.request.body)
+	ctx.response.body = {
+		'ctx.request.body': ctx.request.body
+	};*/
+
+	  await delay(5000);
+	  ctx.response.body = {
+		'ctx.request.body': ctx.request.body
+	};
+};
 const testpost = async ctx => {
 	/*console.log('ctx.request.body', ctx.request.body)
 	ctx.response.body = {
@@ -39,17 +50,6 @@ const testpost = async ctx => {
 	};*/
 
 	  await delay(2000);
-	  ctx.response.body = {
-		'ctx.request.body': ctx.request.body
-	};
-};
-const testpost2 = async ctx => {
-	/*console.log('ctx.request.body', ctx.request.body)
-	ctx.response.body = {
-		'ctx.request.body': ctx.request.body
-	};*/
-
-	  // await delay(2000);
 	  ctx.response.body = {
 		'ctx.request.body': ctx.request.body
 	};

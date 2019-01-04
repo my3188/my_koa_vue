@@ -42,30 +42,37 @@ let paramPost = function(data) {
 /****** request拦截器==>对请求参数做处理 ******/
 var loadinginstace;
 let needLoadingRequestCount = 0
-function showLoading() {
-  if (needLoadingRequestCount === 0) {
-    loadinginstace = Loading.service({
-      lock: true,
-      text: '加载中……',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
+function showLoading(isShow=true) {
+  if (isShow) {
+    if (needLoadingRequestCount === 0) {
+      loadinginstace = Loading.service({
+        lock: true,
+        text: '加载中……',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+    }
+    needLoadingRequestCount++
   }
-  needLoadingRequestCount++
+  
 }
-function tryHideLoading() {
-  if (needLoadingRequestCount <= 0) return
-  needLoadingRequestCount--
-  if (needLoadingRequestCount === 0) {
-    loadinginstace.close()
+function tryHideLoading(isShow=true) {
+  if (isShow) {
+    if (needLoadingRequestCount <= 0) return
+    needLoadingRequestCount--
+    if (needLoadingRequestCount === 0) {
+      loadinginstace.close()
+    }
   }
+  
 }
 
 
 instance.interceptors.request.use(config => {
-  showLoading()
+  showLoading(config.showLoading)
+
   return config
 }, error => {
-  tryHideLoading()
+  tryHideLoading(config.showLoading)
   Message.error({
     message: '加载超时'
   })
@@ -74,8 +81,8 @@ instance.interceptors.request.use(config => {
 
 
 instance.interceptors.response.use(res => {
-  // console.log('====响应res===', res)
-  tryHideLoading()
+  console.log('====响应res===', res.config)
+  tryHideLoading(res.config.showLoading)
   if (res.status == 200) {
     return res.data;
   }
@@ -98,7 +105,7 @@ instance.interceptors.response.use(res => {
     return Promise.reject(new Error("request.data is not Object"));
   }
 }, error => {
-  tryHideLoading()
+  tryHideLoading(res.config.showLoading)
   Message.error({
     message: '加载失败'
   })
