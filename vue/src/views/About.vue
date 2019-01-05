@@ -44,10 +44,10 @@ export default {
       fetch.get('/testget', {
         ID: 12345,
         name:'马越',
-      })
+      },{showLoading:true})
       .then(function (response) {
         self.getResponse = response
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -59,26 +59,26 @@ export default {
       let self = this;
       fetch.post('/testpost', {
         type: 'post'
-      },{showLoading:true})
+      },{showLoading:false})
       .then(response=>{
         self.postResponse = response
-        console.log(response);
+        // console.log(response);
       })
       .catch(error=>{
         console.log(error);
       });
-      setTimeout(()=>{
+      /*setTimeout(()=>{
         fetch.post('/testpost2', {
           ID: 12345,
           name:'马越',
         })
-      },1000)
+      },1000)*/
     },    
     onclickput(){
       let self = this;
       fetch.put('/testput', {
         type: 'put'
-      })
+      },{showLoading:true})
       .then(response=>{
         self.putResponse = response
         console.log(response);
@@ -93,7 +93,7 @@ export default {
         type: 'delete',
         type1: 'delete1',
         type2:{name:33}
-      })
+      },{showLoading:true})
 		  .then(response=>{
         self.deleteResponse = response
 		    console.log(response);

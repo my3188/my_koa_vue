@@ -72,6 +72,7 @@ function tryHideLoading(isShow=true) {
 
 
 instance.interceptors.request.use(config => {
+  console.log('config',config)
   showLoading(config.showLoading)
 
   return config
@@ -120,24 +121,31 @@ instance.interceptors.response.use(res => {
 let _get = instance.get
 let _delete = instance.delete
 // myinstance.get = function(){};
-instance.get = function(url, data) {
+/*instance.get = function(url, data) {
   return _get(url, {
     params: data
   });
-}
-
-/*myinstance.put = function(url, data) {
-  return instance.put(url, data);
-}
-
-myinstance.post = function(url, data) {
-  return instance.post(url, data);
 }*/
+instance.get = function(...params) {
+  let data = params[1];
+  let option = params[2];
+  params[1] = {
+    params: data,
+  }
+  params.length=2;
+  Object.assign(params[1], option);
+  return _get(...params);
+}
 
-instance.delete = function(url, data) {
-  return _delete(url, {
-    data
-  });
+instance.delete = function(...params) {
+  let data = params[1];
+  let option = params[2];
+  params[1] = {
+    data,
+  }
+  params.length=2;
+  Object.assign(params[1], option);
+  return _delete(...params);
 }
 
 
