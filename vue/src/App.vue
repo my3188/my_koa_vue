@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-        <img src="./assets/logo.png">
+    <img src="./assets/logo.png">
 	    <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
      <router-view/>
     
-    <HelloWorld msg="Welcome to Your Vue.js App" v-if='$route.path=="/"' />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" v-if='$route.path=="/"' /> -->
   </div>
 </template>
 
